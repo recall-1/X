@@ -56,3 +56,4 @@ def sendMail(mail_content, recv_address):
 if __name__ == '__main__':
     data = data_()
     sendMail(data, "2241007756@qq.com")
+    sendMail(data, "2179854230@qq.com")
