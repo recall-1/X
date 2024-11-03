@@ -1,17 +1,16 @@
 import smtplib
-from datetime import datetime
+import datetime
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-
 
 """
 剩余时间生成
 """
 def data_():
     timedata = '2025-04-20 08:00:00'
-    future = datetime.strptime(timedata, '%Y-%m-%d %H:%M:%S')
+    future = datetime.datetime.strptime(timedata, '%Y-%m-%d %H:%M:%S') + datetime.timedelta(hours=8)
     # 当前时间
-    now = datetime.now()
+    now = datetime.datetime.now() + datetime.timedelta(hours=8)
     # 时间差
     delta = future - now
     hour = delta.seconds / 60 / 60
@@ -25,7 +24,7 @@ def data_():
 """
 邮件发送
 """
-def sendMail(mail_content, recv_address):
+def sendMail(mail_subject, mail_content, recv_address):
     # param mail_content 邮件内容
     # param recv_address 接收邮箱
     sender_address = '1156415978@qq.com'
@@ -34,7 +33,7 @@ def sendMail(mail_content, recv_address):
     message = MIMEMultipart()  # message结构体初始化
     message['From'] = sender_address  # 你自己的邮箱
     message['To'] = recv_address  # 要发送邮件的邮箱
-    message['Subject'] = '主题'
+    message['Subject'] = mail_subject
     # mail_content,发送内容,这个内容可以自定义,'plain'表示文本格式
     message.attach(MIMEText(mail_content, 'plain'))
     # 这里是smtp网站的连接,可以通过谷歌邮箱查看,步骤请看下边
@@ -55,6 +54,4 @@ def sendMail(mail_content, recv_address):
 
 if __name__ == '__main__':
     data = data_()
-    sendMail(data, "2241007756@qq.com")
-    sendMail(data, "recollect.1105@gmail.com")
-    # sendMail(data, "2179854230@qq.com")
+    sendMail("专升本倒计时", data, "2241007756@qq.com")
