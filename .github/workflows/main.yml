@@ -20,7 +20,11 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
-
+      - name: Set up Node.js (if needed)  
+      
+      - uses: actions/setup-node@v2  
+        with:  
+          node-version: 'lts'  # 或者 'lts' 如果 LTS 是 Node.js 20
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
