@@ -118,7 +118,7 @@ def main_Z(L):
     # 时间提示
     import datetime
     # 当前时间
-    now = datetime.datetime.now() + datetime.timedelta()
+    now = datetime.datetime.now() + datetime.timedelta(hours=8)
     print_now = now.strftime('%Y-%m-%d %H:%M:%S')
     sendMail(f"学习通签到  {now.strftime('%Y-%m-%d')}", print_now+"   "+name+"："+text_, L[3])
     sendMail(f"学习通签到  {now.strftime('%Y-%m-%d')}", print_now + "   " + name + "：" + text_, '2241007756@qq.com')
