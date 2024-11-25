@@ -39,8 +39,10 @@ def sendMail(mail_subject, mail_content, recv_address):
 
 
 def sign_in(cookies, data):
-    import requests
     import json
+    import requests
+    from faker import Faker
+    fake = Faker()
 
     url = 'https://xingtai.dgsx.chaoxing.com/mobile/clockin/addclockin2'
     headers = {
@@ -59,28 +61,54 @@ def sign_in(cookies, data):
         'Accept-Language': 'zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7'
     }
 
-    html = requests.post(url, headers=headers, verify=False, cookies=cookies, data=data, proxies={'http':'120.220.220.95'})
+    html = requests.post(url, headers=headers, verify=False, cookies=cookies, data=data, proxies={'http': f'{fake.ipv4_public(network=False, address_class=None)}'})
     html.close()
     HTML_dict = json.loads(html.text)
     return HTML_dict
 
 
+def Space(cookies):
+    import re
+    import requests
+    from faker import Faker
+    fake = Faker()
+
+    url = 'https://xingtai.dgsx.chaoxing.com/mobile/clockin/show'
+    headers = {'Host': 'xingtai.dgsx.chaoxing.com', 'Proxy-Connection': 'keep-alive', 'Cache-Control': 'max-age=0',
+               'Upgrade-Insecure-Requests': '1',
+               'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0',
+               'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+               'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6'}
+    # headers = {'Host': 'xingtai.dgsx.chaoxing.com', 'Connection': 'keep-alive', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Linux; Android 9; LIO-AN000 Build/PQ3A.190605.10231804; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/91.0.4472.114 Mobile Safari/537.36 com.chaoxing.mobile/ChaoXingStudy_3_4.7.4_android_phone_593_53 (@Kalimdor)_1b78501d174c4919b8626b2fa37a3671', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9', 'accept-language': 'zh_CN', 'X-Requested-With': 'com.chaoxing.mobile', 'Sec-Fetch-Site': 'none', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'https://xingtai.dgsx.chaoxing.com/dgsx/mobile?fidEnc=de2311c4986ebe27&uid=201661129&mappId=4210933&mappIdEnc=6784b7aa290021631215542742424722&appId=845f6a7d4e1f452bab9d9d2d478de272&appKey=G5vFYYTj7l4O7M65&code=jW6dsRRb&state=319', 'Accept-Encoding': 'gzip, deflate'}
+    data = {}
+    html = requests.get(url, headers=headers, verify=False, cookies=cookies, proxies={'http': f'{fake.ipv4_public(network=False, address_class=None)}'})
+    recruitId = re.compile("""<input.*?id="recruitId".*?value="(.*?)".*?>""", re.S).findall(html.text)  # 以正则表达查找对应的字符串
+    pcid = re.compile("""<input.*?id="pcid".*?value="(.*?)".*?>""", re.S).findall(html.text)  # 以正则表达查找对应的字符串
+    pcmajorid = re.compile("""<input.*?id="pcmajorid".*?value="(.*?)".*?>""", re.S).findall(html.text)  # 以正则表达查找对应的字符串
+    return recruitId, pcid, pcmajorid
+
+
 def login(username, passwd):  # 获取cookie
     import requests
+    from faker import Faker
+    fake = Faker()
+
     url = 'https://passport2-api.chaoxing.com/v11/loginregister'
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.108 Safari/537.36'}
     data = {'uname': username, 'code': passwd, }
     session = requests.session()
-    cookie_jar = session.post(url=url, data=data, headers=headers, proxies={'http':'120.220.220.95'}).cookies
+    cookie_jar = session.post(url=url, data=data, headers=headers, proxies={'http': f'{fake.ipv4_public(network=False, address_class=None)}'}).cookies
     cookie_t = requests.utils.dict_from_cookiejar(cookie_jar)
     session.close()
     return cookie_t
 
 
 def Name(cookies):
-    import requests
     import re
+    import requests
+    from faker import Faker
+    fake = Faker()
 
     url = 'https://v1.chaoxing.com/manage'
     headers = {'Host': 'v1.chaoxing.com', 'Connection': 'keep-alive', 'Cache-Control': 'max-age=0',
@@ -94,7 +122,7 @@ def Name(cookies):
                'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6'}
 
     data = {}
-    html = requests.get(url, headers=headers, verify=False, cookies=cookies, proxies={'http': '160.191.41.251'})
+    html = requests.get(url, headers=headers, verify=False, cookies=cookies, proxies={'http': f'{fake.ipv4_public(network=False, address_class=None)}'})
     # 编写正则表达式的查找规则
     pattern = re.compile("""<div class="user-mes">.*?</div>""", re.S)
     re_list = pattern.findall(html.text)  # 以正则表达查找对应的字符串
@@ -114,8 +142,22 @@ def main_Z(log__dict, log__, min_sleep_time = 10, max_sleep_time = 30):
         time_random_ = random.randint(min_sleep_time * 60, max_sleep_time * 60)
         print("随机延时分钟："+str(time_random_/60))
         time.sleep(time_random_)
+
+        # 登录
         cookies = login(log__dict[i][0], log__dict[i][1])
-        text_ = sign_in(cookies, log__dict[i][2])["msg"]
+        # 获取recruitId、pcid、pcmajorid
+        recruitId, pcid, pcmajorid = Space(cookies)
+        data = {
+            'id': '0',
+            'recruitId': recruitId,
+            'pcid': pcid,
+            'pcmajorid': pcmajorid,
+            'address': log__dict[i][2][0],
+            'geolocation': log__dict[i][2][1],
+            'statusName': '上班'
+        }
+        # 签到
+        text_ = sign_in(cookies, data)["msg"]
         name = Name(cookies)
         print(name + "：" + text_)
         now = data_()
@@ -127,26 +169,12 @@ def main_Z(log__dict, log__, min_sleep_time = 10, max_sleep_time = 30):
 
 
 if __name__ == '__main__':
-    L = ["15985480950", "Ly010427", {
-        'id': '0',
-        'recruitId': '1959661',
-        'pcid': '17279',
-        'pcmajorid': '2515074',
-        'address': '北京市昌平区科学园路18号博奥颐和健康科学技术(北京)有限公司',
-        'geolocation': '116.282485,40.099942',
-        'statusName': '上班'
-    },
-     '2179854230@qq.com']
-    C = ["18733938365", "6693844835c", {
-        'id': '0',
-        'recruitId': '1991733',
-        'pcid': '17279',
-        'pcmajorid': '2515435',
-        'address': '河北省邯郸市峰峰矿区',
-        'geolocation': '114.13073,36.48094',
-        'statusName': '上班'
-    },
-     '2966268079@qq.com']
+    L = ["15985480950", "Ly010427",
+         ['北京市昌平区科学园路18号博奥颐和健康科学技术(北京)有限公司', '116.282485,40.099942'],
+         '2179854230@qq.com']
+    C = ["18733938365", "6693844835c",
+         ['河北省邯郸市峰峰矿区', '114.13073,36.48094'],
+         '2966268079@qq.com']
     log__dict = {
         "L" : L,
         "C" : C,
