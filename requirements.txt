@@ -1,3 +1,4 @@
 PyEmail
 datetime
 requests
+Faker
