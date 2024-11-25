@@ -116,8 +116,9 @@ def main_Z(log__dict, log__, min_sleep_time = 10, max_sleep_time = 30):
         time.sleep(time_random_)
         cookies = login(log__dict[i][0], log__dict[i][1])
         text_ = sign_in(cookies, log__dict[i][2])["msg"]
-        print(text_)
         name = Name(cookies)
+        print(name + "：" + text_)
+        now = data_()
         N = f"{now.strftime('%Y-%m-%d %H:%M:%S')}"+"   "+name+"："+text_
         sendMail(B, N, log__dict[i][3])
         N_all = N_all + "\n" + N
@@ -141,7 +142,7 @@ if __name__ == '__main__':
         'recruitId': '1991733',
         'pcid': '17279',
         'pcmajorid': '2515435',
-        'address': '峰峰矿区义井镇王看',
+        'address': '河北省邯郸市峰峰矿区',
         'geolocation': '114.13073,36.48094',
         'statusName': '上班'
     },
