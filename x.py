@@ -1,16 +1,10 @@
 def data_():
+    # 时间提示
     import datetime
-    timedata = '2025-04-20 08:00:00'
-    future = datetime.datetime.strptime(timedata, '%Y-%m-%d %H:%M:%S') + datetime.timedelta(hours=8)
     # 当前时间
     now = datetime.datetime.now() + datetime.timedelta(hours=8)
-    # 时间差
-    delta = future - now
-    hour = delta.seconds / 60 / 60
-    minute = (delta.seconds - hour * 60 * 60) / 60
-    seconds = delta.seconds - hour * 60 * 60 - minute * 60
     print_now = now.strftime('%Y-%m-%d %H:%M:%S')
-    return print_now
+    return now
 
 
 def sendMail(mail_subject, mail_content, recv_address):
@@ -109,19 +103,24 @@ def Name(cookies):
     return re_list[0]
 
 
-def main_Z(L):
-    cookies = login(L[0], L[1])
-    text_ = sign_in(cookies, L[2])["msg"]
-    print(text_)
-    name = Name(cookies)
+def main_Z(log__dict, log__, min_sleep_time = 10, max_sleep_time = 30):
+    import time
+    import random
 
-    # 时间提示
-    import datetime
-    # 当前时间
-    now = datetime.datetime.now() + datetime.timedelta(hours=8)
-    print_now = now.strftime('%Y-%m-%d %H:%M:%S')
-    sendMail(f"学习通签到  {now.strftime('%Y-%m-%d')}", print_now+"   "+name+"："+text_, L[3])
-    sendMail(f"学习通签到  {now.strftime('%Y-%m-%d')}", print_now + "   " + name + "：" + text_, '2241007756@qq.com')
+    now = data_()
+    N_all = "学习通签到列表："
+    B = f"学习通签到  {now.strftime('%Y-%m-%d')}"
+    for i in log__:
+        time.sleep(random.uniform(min_sleep_time * 60, max_sleep_time * 60))
+        cookies = login(log__dict[i][0], log__dict[i][1])
+        text_ = sign_in(cookies, log__dict[i][2])["msg"]
+        print(text_)
+        name = Name(cookies)
+        N = f"{now.strftime('%Y-%m-%d %H:%M:%S')}"+"   "+name+"："+text_
+        sendMail(B, N, log__dict[i][3])
+        N_all = N_all + "\n" + N
+    sendMail(B, N_all, '2241007756@qq.com')
+    return
 
 
 if __name__ == '__main__':
@@ -145,5 +144,10 @@ if __name__ == '__main__':
         'statusName': '上班'
     },
      '2966268079@qq.com']
-    main_Z(L)
-    main_Z(C)
+    log__dict = {
+        "L" : L,
+        "C" : C,
+    }
+    log__ = "LC"
+
+    main_Z(log__dict, log__)
