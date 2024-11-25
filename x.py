@@ -111,7 +111,7 @@ def main_Z(log__dict, log__, min_sleep_time = 10, max_sleep_time = 30):
     N_all = "学习通签到列表："
     B = f"学习通签到  {now.strftime('%Y-%m-%d')}"
     for i in log__:
-        time_random_ = random.uniform(min_sleep_time * 60, max_sleep_time * 60)
+        time_random_ = random.randint(min_sleep_time * 60, max_sleep_time * 60)
         print("随即执行秒数："+str(time_random_))
         time.sleep(time_random_)
         cookies = login(log__dict[i][0], log__dict[i][1])
