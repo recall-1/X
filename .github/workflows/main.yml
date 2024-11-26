@@ -33,6 +33,7 @@ jobs:
           # 文件路径数组
           FILES=(
             "X.enc"
+            "X.csv"
             "private_key.pem"
           )
           # 私有库的基本 API URL
@@ -46,11 +47,6 @@ jobs:
                  -o $(basename $FILE) \
                  "$BASE_URL/$FILE"
           done
-          pwd
-          sudo chmod 777 * -R
-          ls -li
-          openssl version
-          sudo apt-get install openssl=3.0.15
 
         
       - name: Install requirements.txt
