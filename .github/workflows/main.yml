@@ -26,6 +26,27 @@ jobs:
         with:
           python-version: '3.12'  # 选择要用的Python版本
 
+      - name: Download files using GITHUB_TOKEN
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # 文件路径数组
+          FILES=(
+            "X"
+            "private_key.pem"
+          )
+          # 私有库的基本 API URL
+          BASE_URL="https://api.github.com/repos/recall-1/RSA/contents"
+          
+          # 循环下载文件
+          for FILE in "${FILES[@]}"; do
+            echo "Downloading $FILE..."
+            curl -H "Authorization: token $TOKEN" \
+                 -H "Accept: application/vnd.github.v3.raw" \
+                 -o $(basename $FILE) \
+                 "$BASE_URL/$FILE"
+          done
+
         
       - name: Install requirements.txt
         run: | # 安装依赖包
