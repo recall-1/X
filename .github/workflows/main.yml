@@ -32,7 +32,7 @@ jobs:
         run: |
           # 文件路径数组
           FILES=(
-            "X"
+            "X.enc"
             "private_key.pem"
           )
           # 私有库的基本 API URL
