@@ -229,7 +229,7 @@ def main_Z(log__dict, min_sleep_time = 10, max_sleep_time = 30):
 
 
 
-def threaded_task(user_info, min_sleep_time=10, max_sleep_time=30):
+def threaded_task(user_info, min_sleep_time=3, max_sleep_time=9):
     import time
     import random
     """
@@ -237,10 +237,9 @@ def threaded_task(user_info, min_sleep_time=10, max_sleep_time=30):
     """
     try:
         # 随机延时，模拟人类操作
-        # time_random_ = random.randint(min_sleep_time * 60, max_sleep_time * 60)
-        # print(f"随机延时分钟：{time_random_ / 60}")
-        # time.sleep(time_random_)
-
+        time_random_ = random.randint(min_sleep_time * 60, max_sleep_time * 60)
+        print(f"随机延时分钟：{time_random_ / 60}")
+        time.sleep(time_random_)
         # 登录
         cookies = login(user_info[0], user_info[1])
 
@@ -255,7 +254,10 @@ def threaded_task(user_info, min_sleep_time=10, max_sleep_time=30):
             'geolocation': user_info[2][1],
             'statusName': '上班'
         }
-
+        # 随机延时，模拟人类操作
+        time_random_ = random.randint(min_sleep_time * 60, max_sleep_time * 60)
+        print(f"随机延时分钟：{time_random_ / 60}")
+        time.sleep(time_random_)
         # 签到
         response = sign_in(cookies, data)
         msg = response["msg"]
