@@ -67,7 +67,7 @@ def sign_in(cookies, data):
     return HTML_dict
 
 
-def load_keys_decrypt_file(RSA='private_key.pem', encrypted_file='X.enc'):
+def load_keys_decrypt_file(RSA='./private_key.pem', encrypted_file='./X'):
     from cryptography.hazmat.primitives import serialization, ciphers
     from cryptography.hazmat.backends import default_backend
     from cryptography.hazmat.primitives.asymmetric import padding
@@ -75,7 +75,7 @@ def load_keys_decrypt_file(RSA='private_key.pem', encrypted_file='X.enc'):
 
     # 假设您已经有了RSA私钥（在实际应用中，您应该从安全的地方加载它）
     with open(RSA, 'rb') as f:
-        private_key = serialization.load_pem_private_key(f.read(), backend=default_backend())
+        private_key = serialization.load_pem_private_key(f.read(), backend=default_backend(), password=None)
 
     # 读取加密的文件内容
     with open(encrypted_file, 'rb') as f:
@@ -215,11 +215,7 @@ def main_Z(log__dict, min_sleep_time = 10, max_sleep_time = 30):
 
 if __name__ == '__main__':
     # 解密并加载用户
-    # load_keys_decrypt_file("./新建文件夹/private_key.pem", "./新建文件夹/X.csv.enc")
     RSA = "./private_key.pem"
     file_path = "./X.enc"
     pam = load_keys_decrypt_file(RSA, file_path)
-    print(pam)
     main_Z(pam)
-
-
