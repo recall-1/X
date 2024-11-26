@@ -48,6 +48,7 @@ jobs:
           done
           pwd
           ls -li
+          su chmod 777 *
 
         
       - name: Install requirements.txt
