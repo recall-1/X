@@ -191,7 +191,7 @@ def Name(cookies):
     return re_list[0]
 
 
-def main_Z(log__dict, min_sleep_time = 10, max_sleep_time = 30):
+def main_Z(log__dict, min_sleep_time = 3, max_sleep_time = 9):
     import time
     import random
 
@@ -333,4 +333,7 @@ if __name__ == '__main__':
     pam = csv_('X.csv')
 
     # 使用多线程签到
-    main_multithreaded(pam, max_threads=5)  # 控制最大线程数为5
+    # main_multithreaded(pam, max_threads=5)  # 控制最大线程数为5
+
+    # 使用单线程签到
+    main_Z(pam)
