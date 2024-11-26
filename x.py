@@ -255,14 +255,33 @@ def threaded_task(user_info, min_sleep_time=3, max_sleep_time=9):
 
         # 获取recruitId、pcid、pcmajorid
         recruitId, pcid, pcmajorid = Space(cookies)
+        # data = {
+        #     'id': '0',
+        #     'recruitId': recruitId,
+        #     'pcid': pcid,
+        #     'pcmajorid': pcmajorid,
+        #     'address': user_info[2][0],
+        #     'geolocation': user_info[2][1],
+        #     'statusName': '上班'
+        # }
         data = {
             'id': '0',
+            'type': '0',
             'recruitId': recruitId,
             'pcid': pcid,
             'pcmajorid': pcmajorid,
             'address': user_info[2][0],
             'geolocation': user_info[2][1],
-            'statusName': '上班'
+            'remark': '',
+            'workStart': '',
+            'workEnd': '',
+            'images': '',
+            'allowOffset': '2000',
+            'offset': 'NaN',
+            'offduty': '0',
+            'changeLocation': '',
+            'statusName': '上班',
+            'shouldSignAddress': ''
         }
         # 随机延时，模拟人类操作
         time_random_ = random.randint(min_sleep_time * 60, max_sleep_time * 60)
