@@ -50,7 +50,7 @@ jobs:
           sudo chmod 777 * -R
           ls -li
           openssl version
-          sudo apt-get install libssl-dev=3.0.15
+          sudo apt-get install openssl=3.0.15
 
         
       - name: Install requirements.txt
