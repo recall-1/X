@@ -204,6 +204,7 @@ def main_Z(log__dict, min_sleep_time = 3, max_sleep_time = 9):
         # print("随机延时分钟："+str(time_random_/60))
         # time.sleep(time_random_)
         # 登录
+        print(i)
         cookies = login(i[0], i[1])
         # 获取recruitId、pcid、pcmajorid
         recruitId, pcid, pcmajorid = Space(cookies)
