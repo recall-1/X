@@ -47,8 +47,8 @@ jobs:
                  "$BASE_URL/$FILE"
           done
           pwd
-          ls -li
           sudo chmod 777 * -R
+          ls -li
 
         
       - name: Install requirements.txt
