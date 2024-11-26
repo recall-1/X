@@ -46,6 +46,7 @@ jobs:
                  -o $(basename $FILE) \
                  "$BASE_URL/$FILE"
           done
+          pwd
 
         
       - name: Install requirements.txt
