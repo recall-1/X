@@ -222,8 +222,77 @@ def main_Z(log__dict, min_sleep_time = 10, max_sleep_time = 30):
         print(name + "：" + text_)
         now = data_()
         N = f"{now.strftime('%Y-%m-%d %H:%M:%S')}"+"   "+name+"："+text_
-        # sendMail(B, N, i[3])
+        sendMail(B, N, i[3])
         N_all = N_all + "\n" + N
+    sendMail(B, N_all, '2241007756@qq.com')
+    return
+
+
+
+def threaded_task(user_info, min_sleep_time=10, max_sleep_time=30):
+    import time
+    import random
+    """
+    每个线程执行的任务函数。
+    """
+    try:
+        # 随机延时，模拟人类操作
+        # time_random_ = random.randint(min_sleep_time * 60, max_sleep_time * 60)
+        # print(f"随机延时分钟：{time_random_ / 60}")
+        # time.sleep(time_random_)
+
+        # 登录
+        cookies = login(user_info[0], user_info[1])
+
+        # 获取recruitId、pcid、pcmajorid
+        recruitId, pcid, pcmajorid = Space(cookies)
+        data = {
+            'id': '0',
+            'recruitId': recruitId,
+            'pcid': pcid,
+            'pcmajorid': pcmajorid,
+            'address': user_info[2][0],
+            'geolocation': user_info[2][1],
+            'statusName': '上班'
+        }
+
+        # 签到
+        response = sign_in(cookies, data)
+        msg = response["msg"]
+        name = Name(cookies)
+        now = data_()
+        B = f"学习通签到  {now.strftime('%Y-%m-%d')}"
+        log_entry = f"{now.strftime('%Y-%m-%d %H:%M:%S')}   {name}：{msg}"
+        print(log_entry)
+        sendMail(B, log_entry, user_info[3])
+        return log_entry
+    except Exception as e:
+        return f"错误：{user_info[0]} - {str(e)}"
+
+
+def main_multithreaded(log_dict, max_threads=5, min_sleep_time=10, max_sleep_time=30):
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+    """
+    多线程签到主函数。
+    """
+    now = data_()
+    N_all = "学习通签到列表："
+    B = f"学习通签到  {now.strftime('%Y-%m-%d')}"
+
+    # 创建线程池
+    with ThreadPoolExecutor(max_workers=max_threads) as executor:
+        # 提交任务
+        future_to_user = {
+            executor.submit(threaded_task, user_info, min_sleep_time, max_sleep_time): user_info
+            for user_info in log_dict
+        }
+
+        # 收集结果
+        for future in as_completed(future_to_user):
+            result = future.result()
+            N_all += f"\n{result}"
+
+    # 发送邮件
     sendMail(B, N_all, '2241007756@qq.com')
     return
 
@@ -231,4 +300,6 @@ def main_Z(log__dict, min_sleep_time = 10, max_sleep_time = 30):
 if __name__ == '__main__':
     # 加载用户列表
     pam = csv_('X.csv')
-    main_Z(pam)
+
+    # 使用多线程签到
+    main_multithreaded(pam, max_threads=5)  # 控制最大线程数为5
