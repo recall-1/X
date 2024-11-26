@@ -113,6 +113,20 @@ def load_keys_decrypt_file(RSA='./private_key.pem', encrypted_file='./X'):
         rows.append(i)
     return rows
 
+
+def csv_(csv_file_object):
+    import pandas
+
+    # 读取CSV文件对象并创建DataFrame
+    df = pandas.read_csv(csv_file_object)
+    rows = []
+    # 逐行读取数据
+    for index, row in df.iterrows():
+        rows.append(row.values.tolist())
+    # print(rows)
+    return rows
+
+
 def Space(cookies):
     import re
     import requests
@@ -184,11 +198,11 @@ def main_Z(log__dict, min_sleep_time = 10, max_sleep_time = 30):
     now = data_()
     N_all = "学习通签到列表："
     B = f"学习通签到  {now.strftime('%Y-%m-%d')}"
-    print(log__dict)
+    # print(log__dict)
     for i in log__dict:
-        # time_random_ = random.randint(min_sleep_time * 60, max_sleep_time * 60)
-        # print("随机延时分钟："+str(time_random_/60))
-        # time.sleep(time_random_)
+        time_random_ = random.randint(min_sleep_time * 60, max_sleep_time * 60)
+        print("随机延时分钟："+str(time_random_/60))
+        time.sleep(time_random_)
         # 登录
         cookies = login(i[0], i[1])
         # 获取recruitId、pcid、pcmajorid
@@ -215,8 +229,6 @@ def main_Z(log__dict, min_sleep_time = 10, max_sleep_time = 30):
 
 
 if __name__ == '__main__':
-    # 解密并加载用户
-    RSA = "./private_key.pem"
-    file_path = "./X.enc"
-    pam = load_keys_decrypt_file(RSA, file_path)
+    # 加载用户列表
+    pam = csv_('X.csv')
     main_Z(pam)
