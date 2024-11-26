@@ -67,6 +67,51 @@ def sign_in(cookies, data):
     return HTML_dict
 
 
+def load_keys_decrypt_file(RSA='./private_key.pem', encrypted_file='./X'):
+    from cryptography.hazmat.primitives import serialization, ciphers
+    from cryptography.hazmat.backends import default_backend
+    from cryptography.hazmat.primitives.asymmetric import padding
+    from cryptography.hazmat.primitives import hashes
+
+    # 假设您已经有了RSA私钥（在实际应用中，您应该从安全的地方加载它）
+    with open(RSA, 'rb') as f:
+        private_key = serialization.load_pem_private_key(f.read(), password=None, backend=default_backend())
+
+    # 读取加密的文件内容
+    with open(encrypted_file, 'rb') as f:
+        encrypted_aes_key = f.read(512)  # 假设RSA加密的AES密钥长度是256字节（取决于RSA密钥大小和填充）
+        iv = f.read(16)  # 读取IV（初始化向量），长度通常为16字节（对于AES-CFB模式）
+        encrypted_file_data = f.read()  # 读取加密的文件数据
+
+    # 使用RSA私钥解密AES密钥
+    decrypted_aes_key = private_key.decrypt(
+        encrypted_aes_key,
+        padding.OAEP(
+            mgf=padding.MGF1(algorithm=hashes.SHA256()),
+            algorithm=hashes.SHA256(),
+            label=None
+        )
+    )
+
+    # 使用解密后的AES密钥和IV来解密文件内容
+    cipher = ciphers.Cipher(ciphers.algorithms.AES(decrypted_aes_key), ciphers.modes.CFB(iv), backend=default_backend())
+    decryptor = cipher.decryptor()
+    decrypted_file_data = decryptor.update(encrypted_file_data) + decryptor.finalize()
+    import pandas
+    from io import StringIO
+    csv_file_object = StringIO(decrypted_file_data.decode('utf-8'))
+
+    # 读取CSV文件对象并创建DataFrame
+    df = pandas.read_csv(csv_file_object)
+    rows = []
+    # 逐行读取数据
+    for index, row in df.iterrows():
+        i = [str(row.values.tolist()[0]), row.values.tolist()[1],
+             [item.strip("'") for item in row.values.tolist()[2].strip('[]').split(", ")], str(row.values.tolist()[3])]
+        # 将行数据添加到列表中
+        rows.append(i)
+    return rows
+
 def Space(cookies):
     import re
     import requests
@@ -131,20 +176,20 @@ def Name(cookies):
     return re_list[0]
 
 
-def main_Z(log__dict, log__, min_sleep_time = 10, max_sleep_time = 30):
+def main_Z(log__dict, min_sleep_time = 10, max_sleep_time = 30):
     import time
     import random
 
     now = data_()
     N_all = "学习通签到列表："
     B = f"学习通签到  {now.strftime('%Y-%m-%d')}"
-    for i in log__:
-        time_random_ = random.randint(min_sleep_time * 60, max_sleep_time * 60)
-        print("随机延时分钟："+str(time_random_/60))
-        time.sleep(time_random_)
-
+    print(log__dict)
+    for i in log__dict:
+        # time_random_ = random.randint(min_sleep_time * 60, max_sleep_time * 60)
+        # print("随机延时分钟："+str(time_random_/60))
+        # time.sleep(time_random_)
         # 登录
-        cookies = login(log__dict[i][0], log__dict[i][1])
+        cookies = login(i[0], i[1])
         # 获取recruitId、pcid、pcmajorid
         recruitId, pcid, pcmajorid = Space(cookies)
         data = {
@@ -152,8 +197,8 @@ def main_Z(log__dict, log__, min_sleep_time = 10, max_sleep_time = 30):
             'recruitId': recruitId,
             'pcid': pcid,
             'pcmajorid': pcmajorid,
-            'address': log__dict[i][2][0],
-            'geolocation': log__dict[i][2][1],
+            'address': i[2][0],
+            'geolocation': i[2][1],
             'statusName': '上班'
         }
         # 签到
@@ -162,23 +207,17 @@ def main_Z(log__dict, log__, min_sleep_time = 10, max_sleep_time = 30):
         print(name + "：" + text_)
         now = data_()
         N = f"{now.strftime('%Y-%m-%d %H:%M:%S')}"+"   "+name+"："+text_
-        sendMail(B, N, log__dict[i][3])
+        # sendMail(B, N, i[3])
         N_all = N_all + "\n" + N
     sendMail(B, N_all, '2241007756@qq.com')
     return
 
 
 if __name__ == '__main__':
-    L = ["15985480950", "Ly010427",
-         ['北京市昌平区科学园路18号博奥颐和健康科学技术(北京)有限公司', '116.282485,40.099942'],
-         '2179854230@qq.com']
-    C = ["18733938365", "6693844835c",
-         ['河北省邯郸市峰峰矿区', '114.13073,36.48094'],
-         '2966268079@qq.com']
-    log__dict = {
-        "L" : L,
-        "C" : C,
-    }
-    log__ = "LC"
-
-    main_Z(log__dict, log__)
+    # 解密并加载用户
+    # load_keys_decrypt_file("./新建文件夹/private_key.pem", "./新建文件夹/X.csv.enc")
+    RSA = "./private_key.pem"
+    file_path = "./X"
+    pam = load_keys_decrypt_file(RSA, file_path)
+    print(pam)
+    main_Z(pam)
