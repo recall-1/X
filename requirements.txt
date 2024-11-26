@@ -2,3 +2,4 @@ PyEmail
 datetime
 requests
 Faker
+cryptography
