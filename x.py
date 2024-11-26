@@ -209,12 +209,22 @@ def main_Z(log__dict, min_sleep_time = 10, max_sleep_time = 30):
         recruitId, pcid, pcmajorid = Space(cookies)
         data = {
             'id': '0',
+            'type': '0',
             'recruitId': recruitId,
             'pcid': pcid,
             'pcmajorid': pcmajorid,
             'address': i[2][0],
             'geolocation': i[2][1],
-            'statusName': '上班'
+            'remark': '',
+            'workStart': '',
+            'workEnd': '',
+            'images': '',
+            'allowOffset': '2000',
+            'offset': 'NaN',
+            'offduty': '0',
+            'changeLocation': '',
+            'statusName': '上班',
+            'shouldSignAddress': ''
         }
         # 签到
         text_ = sign_in(cookies, data)["msg"]
