@@ -49,6 +49,7 @@ jobs:
           pwd
           sudo chmod 777 * -R
           ls -li
+          openssl version
 
         
       - name: Install requirements.txt
