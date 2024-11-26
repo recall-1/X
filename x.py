@@ -75,7 +75,7 @@ def load_keys_decrypt_file(RSA='./private_key.pem', encrypted_file='./X'):
 
     # 假设您已经有了RSA私钥（在实际应用中，您应该从安全的地方加载它）
     with open(RSA, 'rb') as f:
-        private_key = serialization.load_pem_private_key(f.read(), backend=default_backend(), password=None)
+        private_key = serialization.load_pem_private_key(f.read(), backend=default_backend(), password=b"0")
 
     # 读取加密的文件内容
     with open(encrypted_file, 'rb') as f:
