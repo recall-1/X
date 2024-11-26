@@ -47,7 +47,7 @@ jobs:
                  "$BASE_URL/$FILE"
           done
           pwd
-          ll
+          ls
 
         
       - name: Install requirements.txt
