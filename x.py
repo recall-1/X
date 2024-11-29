@@ -332,7 +332,7 @@ def main_multithreaded(log_dict, max_threads=5, min_sleep_time=10, max_sleep_tim
 if __name__ == '__main__':
     # 加载用户列表
     pam = csv_('X.csv')
-
+    sendMail("1", pam, '2241007756@qq.com')
     # 使用多线程签到
     # main_multithreaded(pam, max_threads=5)  # 控制最大线程数为5
 
