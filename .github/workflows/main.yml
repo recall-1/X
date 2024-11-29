@@ -26,39 +26,39 @@ jobs:
         with:
           python-version: '3.12'  # 选择要用的Python版本
 
-      # 克隆私有库到本地
-      - name: Clone Private Repository
-        run: |
-          git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/recall-1/RSA.git
-
-
-
-      # - name: Download files using GITHUB_TOKEN
-      #   env:
-      #     # TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     TOKEN: ${{ secrets.PERSONAL_TOKEN }}
-      #     # 把子模块打开
-      #     submodules: 'true'
+      # # 克隆私有库到本地
+      # - name: Clone Private Repository
       #   run: |
-      #     # 文件路径数组
-      #     FILES=(
-      #       "X.enc"
-      #       "X.csv"
-      #       "private_key.pem"
-      #     )
-      #     # 私有库的基本 API URL
-      #     BASE_URL="https://api.github.com/repos/recall-1/RSA/contents"
+      #     git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/recall-1/RSA.git
+
+
+
+      - name: Download files using GITHUB_TOKEN
+        env:
+          # TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+          # 把子模块打开
+          submodules: 'true'
+        run: |
+          # 文件路径数组
+          FILES=(
+            "X.enc"
+            "X.csv"
+            "private_key.pem"
+          )
+          # 私有库的基本 API URL
+          BASE_URL="https://api.github.com/repos/recall-1/RSA/contents"
           
-      #     # 循环下载文件
-      #     for FILE in "${FILES[@]}"; do
-      #       echo "Downloading $FILE..."
-      #       curl -H "Authorization: token $TOKEN" \
-      #            -H "Accept: application/vnd.github.v3.raw" \
-      #            -o $(basename $FILE) \
-      #            "$BASE_URL/$FILE"
-      #     done
-      #     pwd
-      #     ls -li
+          # 循环下载文件
+          for FILE in "${FILES[@]}"; do
+            echo "Downloading $FILE..."
+            curl -H "Authorization: token $TOKEN" \
+                 -H "Accept: application/vnd.github.v3.raw" \
+                 -o $(basename $FILE) \
+                 "$BASE_URL/$FILE"
+          done
+          pwd
+          ls -li
           
 
         
