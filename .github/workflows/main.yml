@@ -29,7 +29,7 @@ jobs:
       # 克隆私有库到本地
       - name: Clone Private Repository
         run: |
-          git clone https://x-access-token:${{ secrets.PRIVATE_REPO_TOKEN }}@github.com/recall-1/RSA.git private-repo
+          git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/recall-1/RSA.git private-repo
 
 
 
