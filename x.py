@@ -118,7 +118,7 @@ def csv_(csv_file_object):
     import pandas
 
     # 读取CSV文件对象并创建DataFrame
-    df = pandas.read_csv(csv_file_object)
+    df = pandas.read_csv(csv_file_object, sep=',')
     rows = []
     # 逐行读取数据
     for index, row in df.iterrows():
@@ -340,4 +340,4 @@ if __name__ == '__main__':
     # main_multithreaded(pam, max_threads=5)  # 控制最大线程数为5
 
     # 使用单线程签到
-    main_Z(pam)
+    # main_Z(pam)
