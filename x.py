@@ -118,7 +118,7 @@ def csv_(csv_file_object):
     import pandas
 
     # 读取CSV文件对象并创建DataFrame
-    df = pandas.read_csv(csv_file_object, sep=',')
+    df = pandas.read_csv(csv_file_object, sep=',', encoding='utf-8')
     rows = []
     # 逐行读取数据
     for index, row in df.iterrows():
