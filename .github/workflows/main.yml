@@ -35,8 +35,8 @@ jobs:
 
       - name: Download files using GITHUB_TOKEN
         env:
-          # TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # TOKEN: ${{ secrets.PERSONAL_TOKEN }}
           # 把子模块打开
           submodules: 'true'
         run: |
