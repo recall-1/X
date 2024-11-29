@@ -14,7 +14,9 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+    # runs-on: ubuntu-latest
+    name: windows up
+    runs-on: windows-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -55,8 +57,8 @@ jobs:
           
 
         
-      - name: Install requirements.txt
-        run: | # 安装依赖包
-          pip install -r ./requirements.txt 
-      - name: Run x.py
-        run: python x.py # 执行py文件    依据自己代码要运行的py情况而定
+      # - name: Install requirements.txt
+      #   run: | # 安装依赖包
+      #     pip install -r ./requirements.txt 
+      # - name: Run x.py
+      #   run: python x.py # 执行py文件    依据自己代码要运行的py情况而定
