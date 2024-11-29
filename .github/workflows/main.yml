@@ -26,6 +26,10 @@ jobs:
         with:
           python-version: '3.12'  # 选择要用的Python版本
 
+      # 克隆私有库到本地
+      - name: Clone Private Repository
+        run: |
+          git clone https://x-access-token:${{ secrets.PRIVATE_REPO_TOKEN }}@github.com/<owner>/<private-repo>.git private-repo
 
 
 
@@ -58,8 +62,8 @@ jobs:
           
 
         
-      # - name: Install requirements.txt
-      #   run: | # 安装依赖包
-      #     pip install -r ./requirements.txt 
-      # - name: Run x.py
-      #   run: python x.py # 执行py文件    依据自己代码要运行的py情况而定
+      - name: Install requirements.txt
+        run: | # 安装依赖包
+          pip install -r ./requirements.txt 
+      - name: Run x.py
+        run: python x.py # 执行py文件    依据自己代码要运行的py情况而定
