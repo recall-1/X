@@ -15,24 +15,17 @@ jobs:
   build:
     # The type of runner that the job will run on
     # runs-on: ubuntu-latest
-    runs-on: window-latest
+    runs-on: windows-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
-      
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.12'  # 选择要用的Python版本
 
       # # 克隆私有库到本地
       # - name: Clone Private Repository
       #   run: |
       #     git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/recall-1/RSA.git
-
-
 
       - name: Download files using GITHUB_TOKEN
         env:
@@ -62,10 +55,3 @@ jobs:
           pwd
           ls -li
           
-
-        
-      - name: Install requirements.txt
-        run: | # 安装依赖包
-          pip install -r ./requirements.txt 
-      - name: Run x.py
-        run: python x.py # 执行py文件    依据自己代码要运行的py情况而定
