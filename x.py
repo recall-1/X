@@ -331,8 +331,8 @@ def main_multithreaded(log_dict, max_threads=5, min_sleep_time=10, max_sleep_tim
 
 if __name__ == '__main__':
     # 加载用户列表
-    # pam = csv_('X.csv')
-    pam = load_keys_decrypt_file()
+    pam = csv_('X.csv')
+    # pam = load_keys_decrypt_file()
 
     
     import json
