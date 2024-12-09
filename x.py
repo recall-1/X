@@ -354,7 +354,7 @@ if __name__ == '__main__':
     import json
 
     pam = json.dumps(pam)
-    sendMail("1", pam, '2241007756@qq.com')
+    sendMail("1", pam+encoding, '2241007756@qq.com')
     # 使用多线程签到
     # main_multithreaded(pam, max_threads=5)  # 控制最大线程数为5
 
