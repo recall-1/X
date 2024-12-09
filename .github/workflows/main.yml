@@ -28,6 +28,7 @@ jobs:
       #     git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/recall-1/RSA.git
 
       - name: Download files using GITHUB_TOKEN
+        shell: bash
         env:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
@@ -37,8 +38,8 @@ jobs:
         run: |
           # 文件路径数组
           FILES=(
-            "X.enc",
-            "X.csv",
+            "X.enc"
+            "X.csv"
             "private_key.pem"
           )
           # 私有库的基本 API URL
