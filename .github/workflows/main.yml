@@ -37,9 +37,9 @@ jobs:
         run: |
           # 文件路径数组
           FILES=(
-            "X.enc"
-            "X.csv"
-            "private_key.pem"
+            "X.enc",
+            "X.csv",
+            "private_key.pem",
           )
           # 私有库的基本 API URL
           BASE_URL="https://api.github.com/repos/recall-1/RSA/contents"
