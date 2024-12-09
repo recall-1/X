@@ -4,3 +4,4 @@ requests
 Faker
 cryptography
 pandas
+chardet
