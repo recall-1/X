@@ -55,6 +55,7 @@ jobs:
           done
           pwd
           ls -li
+          dos2unix X.csv
           
       - name: Set up Python
         uses: actions/setup-python@v4
