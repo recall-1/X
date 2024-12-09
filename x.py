@@ -330,8 +330,24 @@ def main_multithreaded(log_dict, max_threads=5, min_sleep_time=10, max_sleep_tim
 
 
 if __name__ == '__main__':
+    file = 'X.csv'
+    import chardet
+
+    # 检测文件编码
+    with open(file, 'rb') as f:
+        raw_data = f.read()
+        encoding = chardet.detect(raw_data)['encoding']
+
+    # 转换为 UTF-8
+    if encoding != 'utf-8':
+        with open(file, 'r', encoding=encoding) as f:
+            content = f.read()
+        with open(file, 'w', encoding='utf-8') as f:
+            f.write(content)
+
+    
     # 加载用户列表
-    pam = csv_('X.csv')
+    pam = csv_(file)
     # pam = load_keys_decrypt_file()
 
     
