@@ -1,0 +1,6 @@
+PyEmail
+datetime
+requests
+Faker
+cryptography
+pandas
