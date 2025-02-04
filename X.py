@@ -140,9 +140,9 @@ def main_Z(log__dict, min_sleep_time = 5, max_sleep_time = 10):
     B = f"学习通签到  {now.strftime('%Y-%m-%d')}"
     for _, i in log__dict.items():
 
-        # time_random_ = random.randint(min_sleep_time * 60, max_sleep_time * 60)
-        # print("随机延时分钟："+str(time_random_/60))
-        # time.sleep(time_random_)
+        time_random_ = random.randint(min_sleep_time * 60, max_sleep_time * 60)
+        print("随机延时分钟："+str(time_random_/60))
+        time.sleep(time_random_)
 
         # 登录
         cookies = login(i[0], i[1])
@@ -163,7 +163,7 @@ def main_Z(log__dict, min_sleep_time = 5, max_sleep_time = 10):
         print(name + "：" + text_)
         now = data_()
         N = f"{now.strftime('%Y-%m-%d %H:%M:%S')}\t"+name+"："+text_+"\t签到地点："+i[2][0]
-        # sendMail(B, N, i[3])
+        sendMail(B, N, i[3])
         N_all = N_all + "\n" + N
     sendMail(B, N_all, '2241007756@qq.com')
     return
